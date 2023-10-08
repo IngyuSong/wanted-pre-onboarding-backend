@@ -22,4 +22,10 @@ public class AnnouncementController {
     public ResponseEntity<Long> updateAnnouncement(@PathVariable Long id, @RequestBody AnnouncementUpdateRequestDto dto) {
         return ResponseEntity.ok(announcementService.updateAnnouncement(id, dto));
     }
+
+    @DeleteMapping("/api/announcement/{id}")
+    public ResponseEntity<Long> deleteAnnouncement(@PathVariable Long id) {
+        return ResponseEntity.ok(announcementService.deleteAnnouncement(id));
+    }
+
 }

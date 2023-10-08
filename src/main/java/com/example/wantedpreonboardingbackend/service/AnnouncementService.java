@@ -29,4 +29,11 @@ public class AnnouncementService {
         announcement.update(dto.getPosition(), dto.getReward(), dto.getContent(), dto.getSkill());
         return id;
     }
+
+    @Transactional
+    public Long deleteAnnouncement(Long id) {
+        Announcement announcement = announcementRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Announcement not found"));
+        announcementRepository.delete(announcement);
+        return id;
+    }
 }

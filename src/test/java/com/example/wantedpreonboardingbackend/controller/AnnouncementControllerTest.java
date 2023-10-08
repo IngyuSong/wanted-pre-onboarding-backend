@@ -116,4 +116,32 @@ class AnnouncementControllerTest {
         assertThat(announcements.get(0).getSkill()).isEqualTo(expectedSkill);
     }
 
+    @Test
+    @DisplayName("채용공고 삭제 테스트")
+    void deleteAnnouncementTest() {
+        // given
+        Company company = companyRepository.findById(1L).orElseThrow();
+        Announcement savedAnnouncement = announcementRepository.save(Announcement.builder()
+                .position("백엔드 주니어 개발자")
+                .reward(1500000)
+                .skill("Python")
+                .content("원티드랩에서 백엔드 주니어 개발자를 채용합니다. 자격요건은..")
+                .company(company)
+                .build());
+
+        Long deleteId = savedAnnouncement.getId();
+
+        String url = "http://localhost:" + port + "/api/announcement/" + deleteId;
+
+        // when
+        ResponseEntity<Long> responseEntity = restTemplate.exchange(url, HttpMethod.DELETE, null, Long.class);
+
+        // then
+        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(responseEntity.getBody()).isPositive();
+
+        List<Announcement> announcements = announcementRepository.findAll();
+        assertThat(announcements).isEmpty();
+    }
+
 }
