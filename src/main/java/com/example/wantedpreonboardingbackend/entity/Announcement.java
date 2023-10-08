@@ -34,4 +34,10 @@ public class Announcement {
         this.company = company;
     }
 
+    public void update(String position, Integer reward, String content, String skill) {
+        this.position = position;
+        this.reward = reward;
+        this.content = content;
+        this.skill = skill;
+    }
 }
