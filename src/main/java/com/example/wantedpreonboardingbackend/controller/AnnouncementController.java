@@ -1,11 +1,14 @@
 package com.example.wantedpreonboardingbackend.controller;
 
 import com.example.wantedpreonboardingbackend.dto.AnnouncementCreateRequestDto;
+import com.example.wantedpreonboardingbackend.dto.AnnouncementListResponseDto;
 import com.example.wantedpreonboardingbackend.dto.AnnouncementUpdateRequestDto;
 import com.example.wantedpreonboardingbackend.service.AnnouncementService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -26,6 +29,11 @@ public class AnnouncementController {
     @DeleteMapping("/api/announcement/{id}")
     public ResponseEntity<Long> deleteAnnouncement(@PathVariable Long id) {
         return ResponseEntity.ok(announcementService.deleteAnnouncement(id));
+    }
+
+    @GetMapping("/api/announcement")
+    public ResponseEntity<List<AnnouncementListResponseDto>> getAllAnnouncements() {
+        return ResponseEntity.ok(announcementService.getAllAnnouncements());
     }
 
 }

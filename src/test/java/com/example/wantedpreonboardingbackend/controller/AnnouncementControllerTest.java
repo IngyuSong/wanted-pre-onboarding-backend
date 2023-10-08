@@ -144,4 +144,29 @@ class AnnouncementControllerTest {
         assertThat(announcements).isEmpty();
     }
 
+    @Test
+    @DisplayName("채용공고 목록 테스트")
+    void getAllAnnouncementsTest() {
+        // given
+        Company company = companyRepository.findById(1L).orElseThrow();
+        for (int i = 0; i < 10; i++) {
+            announcementRepository.save(Announcement.builder()
+                  .position("백엔드 주니어 개발자")
+                  .reward(1500000)
+                  .skill("Python")
+                  .content("원티드랩에서 백엔드 주니어 개발자를 채용합니다. 자격요건은..")
+                  .company(company)
+                  .build());
+        }
+
+        String url = "http://localhost:" + port + "/api/announcement";
+
+        // when
+        ResponseEntity<List> responseEntity = restTemplate.getForEntity(url, List.class);
+
+        // then
+        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(responseEntity.getBody()).isNotNull();
+    }
+
 }
