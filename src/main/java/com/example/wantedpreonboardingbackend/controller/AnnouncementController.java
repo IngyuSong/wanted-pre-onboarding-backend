@@ -36,4 +36,9 @@ public class AnnouncementController {
         return ResponseEntity.ok(announcementService.getAllAnnouncements());
     }
 
+    @GetMapping("/api/announcement/search")
+    public ResponseEntity<List<AnnouncementListResponseDto>> getAnnouncements(@RequestParam String keyword) {
+        return ResponseEntity.ok(announcementService.searchAnnouncements(keyword));
+    }
+
 }
