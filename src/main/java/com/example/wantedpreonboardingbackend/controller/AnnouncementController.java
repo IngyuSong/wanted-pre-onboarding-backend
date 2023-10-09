@@ -1,6 +1,7 @@
 package com.example.wantedpreonboardingbackend.controller;
 
 import com.example.wantedpreonboardingbackend.dto.AnnouncementCreateRequestDto;
+import com.example.wantedpreonboardingbackend.dto.AnnouncementDetailResponseDto;
 import com.example.wantedpreonboardingbackend.dto.AnnouncementListResponseDto;
 import com.example.wantedpreonboardingbackend.dto.AnnouncementUpdateRequestDto;
 import com.example.wantedpreonboardingbackend.service.AnnouncementService;
@@ -37,8 +38,13 @@ public class AnnouncementController {
     }
 
     @GetMapping("/api/announcement/search")
-    public ResponseEntity<List<AnnouncementListResponseDto>> getAnnouncements(@RequestParam String keyword) {
+    public ResponseEntity<List<AnnouncementListResponseDto>> searchAnnouncements(@RequestParam String keyword) {
         return ResponseEntity.ok(announcementService.searchAnnouncements(keyword));
+    }
+
+    @GetMapping("/api/announcement/{id}")
+    public ResponseEntity<AnnouncementDetailResponseDto> getAnnouncement(@PathVariable Long id) {
+        return ResponseEntity.ok(announcementService.getAnnouncement(id));
     }
 
 }

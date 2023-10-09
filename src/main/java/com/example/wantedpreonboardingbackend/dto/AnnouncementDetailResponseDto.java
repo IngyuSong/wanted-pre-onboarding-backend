@@ -3,9 +3,12 @@ package com.example.wantedpreonboardingbackend.dto;
 import com.example.wantedpreonboardingbackend.entity.Announcement;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
+import lombok.Setter;
+
+import java.util.List;
 
 @Getter
-public class AnnouncementListResponseDto {
+public class AnnouncementDetailResponseDto {
     @JsonProperty(value = "채용공고_id")
     private Long id;
     @JsonProperty(value = "회사명")
@@ -20,8 +23,13 @@ public class AnnouncementListResponseDto {
     private Integer reward;
     @JsonProperty(value = "사용기술")
     private String skill;
+    @JsonProperty(value = "채용내용")
+    private String content;
+    @Setter
+    @JsonProperty(value = "회사가올린다른채용공고")
+    private List<Long> announcementIdList;
 
-    public AnnouncementListResponseDto(Announcement entity) {
+    public AnnouncementDetailResponseDto(Announcement entity) {
         this.id = entity.getId();
         this.companyName = entity.getCompany().getName();
         this.country = entity.getCompany().getCountry();
@@ -29,5 +37,6 @@ public class AnnouncementListResponseDto {
         this.position = entity.getPosition();
         this.reward = entity.getReward();
         this.skill = entity.getSkill();
+        this.content = entity.getContent();
     }
 }

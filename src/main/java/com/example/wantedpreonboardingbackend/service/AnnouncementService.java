@@ -1,6 +1,7 @@
 package com.example.wantedpreonboardingbackend.service;
 
 import com.example.wantedpreonboardingbackend.dto.AnnouncementCreateRequestDto;
+import com.example.wantedpreonboardingbackend.dto.AnnouncementDetailResponseDto;
 import com.example.wantedpreonboardingbackend.dto.AnnouncementListResponseDto;
 import com.example.wantedpreonboardingbackend.dto.AnnouncementUpdateRequestDto;
 import com.example.wantedpreonboardingbackend.entity.Announcement;
@@ -13,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -63,5 +65,15 @@ public class AnnouncementService {
         return announcements.stream()
                 .map(AnnouncementListResponseDto::new)
                 .toList();
+    }
+
+    @Transactional(readOnly = true)
+    public AnnouncementDetailResponseDto getAnnouncement(Long id) {
+        Announcement announcement = announcementRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Announcement not found"));
+        AnnouncementDetailResponseDto dto = new AnnouncementDetailResponseDto(announcement);
+        List<Long> announcementIdList = new ArrayList<>(announcementRepository.findAllByCompanyId(announcement.getCompany().getId()).stream().map(Announcement::getId).toList());
+        announcementIdList.remove(id);
+        dto.setAnnouncementIdList(announcementIdList);
+        return dto;
     }
 }
