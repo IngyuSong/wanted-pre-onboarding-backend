@@ -3,6 +3,8 @@ package com.example.wantedpreonboardingbackend.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 
+import java.util.List;
+
 @Entity
 @Getter
 public class Member {
@@ -14,5 +16,8 @@ public class Member {
     private String email;
     @Column(nullable = false)
     private String password;
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<Apply> applyList;
 
 }
